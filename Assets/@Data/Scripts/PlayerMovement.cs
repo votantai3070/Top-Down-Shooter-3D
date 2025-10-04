@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -29,10 +28,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 moveInput;
     private Vector2 aimInput;
-
-    private void Awake()
-    {
-    }
 
     private void Start()
     {
@@ -94,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyGravity()
     {
-        if (characterController.isGrounded == false)
+        if (!characterController.isGrounded)
         {
             verticalVelocity -= gravityScale * Time.deltaTime;
             moveDirection.y = verticalVelocity;
