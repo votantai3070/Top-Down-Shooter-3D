@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public class PlayerAim : MonoBehaviour
@@ -5,18 +6,26 @@ public class PlayerAim : MonoBehaviour
     private Player player;
     private PlayerControls controls;
 
-    [Header("Aim Information")]
+    [Header("Aim Control")]
+    public Transform aim;
+
+    [SerializeField] bool isAimingPrecisely;
+
+    [Header("Camera Control Information")]
     [Range(.5f, 1f)]
     [SerializeField] float minCameraDistance = 1.5f;
     [Range(1f, 3f)]
     [SerializeField] float maxCameraDistance = 4f;
     [Range(3f, 5f)]
-    [SerializeField] float senSensetivity = 5f;
+    [SerializeField] float cameraSensetivity = 5f;
 
-    [SerializeField] Transform aim;
+    [Space]
+
+    [SerializeField] Transform cameraTarget;
     [SerializeField] LayerMask aimLayerMask;
 
     Vector2 aimInput;
+    RaycastHit lastKnownMouseHit;
 
     private void Start()
     {
@@ -26,35 +35,62 @@ public class PlayerAim : MonoBehaviour
 
     private void Update()
     {
-        aim.position = Vector3.Lerp(aim.position, DesiredAimPosition(), senSensetivity * Time.deltaTime);
+        if (Input.GetMouseButtonDown(1))
+            isAimingPrecisely = !isAimingPrecisely;
+
+        UpdateAimPosition();
+        UpdateCameraPosition();
     }
 
-    private Vector3 DesiredAimPosition()
+    private void UpdateCameraPosition()
+    {
+        cameraTarget.position =
+                    Vector3.Lerp(cameraTarget.position, DesiredCameraPosition(), cameraSensetivity * Time.deltaTime);
+    }
+
+    private void UpdateAimPosition()
+    {
+        aim.position = GetMouseHitInfo().point;
+
+        if (!isAimingPrecisely)
+            aim.position = new Vector3(aim.position.x, transform.position.y + 1, aim.position.z);
+    }
+
+    public bool CanAimPrecisely()
+    {
+        if (isAimingPrecisely)
+            return true;
+
+        return false;
+    }
+
+    private Vector3 DesiredCameraPosition()
     {
         float actualMaxCameraDistance = player.movement.moveInput.y < -.5f ? minCameraDistance : maxCameraDistance;
 
-        Vector3 desiredAimPosition = GetMousePosition();
-        Vector3 aimDirection = (desiredAimPosition - transform.position).normalized;
+        Vector3 desiredCameraPosition = GetMouseHitInfo().point;
+        Vector3 aimDirection = (desiredCameraPosition - transform.position).normalized;
 
-        float distance = Vector3.Distance(desiredAimPosition, transform.position);
+        float distance = Vector3.Distance(desiredCameraPosition, transform.position);
         float clampedDistance = Mathf.Clamp(distance, minCameraDistance, actualMaxCameraDistance);
 
-        desiredAimPosition = transform.position + (aimDirection * clampedDistance);
-        desiredAimPosition.y = transform.position.y + 1;
+        desiredCameraPosition = transform.position + (aimDirection * clampedDistance);
+        desiredCameraPosition.y = transform.position.y + 1;
 
-        return desiredAimPosition;
+        return desiredCameraPosition;
     }
 
-    public Vector3 GetMousePosition()
+    public RaycastHit GetMouseHitInfo()
     {
         Ray ray = Camera.main.ScreenPointToRay(aimInput);
 
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, aimLayerMask))
         {
-            return hitInfo.point;
+            lastKnownMouseHit = hitInfo;
+            return hitInfo;
         }
 
-        return Vector3.zero;
+        return lastKnownMouseHit;
     }
 
     private void AssignInputEvents()

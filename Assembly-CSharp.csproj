@@ -70,6 +70,7 @@
     <Compile Include="Assets\@Data\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\@Data\InputManagers\PlayerControls.cs" />
     <Compile Include="Assets\@Data\Scripts\PlayerWeaponControllers.cs" />
+    <Compile Include="Assets\@Data\Scripts\Bullet.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
