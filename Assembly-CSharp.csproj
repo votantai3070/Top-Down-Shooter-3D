@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\@Data\Scripts\LeftHandTargetTransform.cs" />
     <Compile Include="Assets\@Data\Scripts\PlayerAnimationEvents.cs" />
+    <Compile Include="Assets\@Data\Scripts\Target.cs" />
     <Compile Include="Assets\@Data\Scripts\PlayerAim.cs" />
     <Compile Include="Assets\@Data\Scripts\Player.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />

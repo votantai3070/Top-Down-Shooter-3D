@@ -27,27 +27,20 @@ public class PlayerWeaponControllers : MonoBehaviour
         GetComponentInChildren<Animator>().SetTrigger("Fire");
     }
 
-    private Vector3 BulletDirection()
+    public Vector3 BulletDirection()
     {
-        Vector3 direction = (player.aim.aim.position - gunPoint.position).normalized;
+        Transform aim = player.aim.AimTransform();
 
-        if (!player.aim.CanAimPrecisely())
+        Vector3 direction = (aim.position - gunPoint.position).normalized;
+
+        if (!player.aim.CanAimPrecisely() && aim == null)
             direction.y = 0;
 
-        weaponHolder.LookAt(player.aim.aim);
-        gunPoint.LookAt(player.aim.aim);
+        //weaponHolder.LookAt(player.aim.AimTransform());
+        //gunPoint.LookAt(player.aim.AimTransform()); //TODO: find a better place for this
 
         return direction;
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(weaponHolder.position, weaponHolder.position + weaponHolder.forward * 25f);
-
-        Gizmos.color = Color.yellow;
-
-        Gizmos.DrawLine(gunPoint.position, gunPoint.position + BulletDirection() * 25f);
-
-        Gizmos.color = Color.red;
-    }
+    public Transform GunPoint() => gunPoint;
 }
