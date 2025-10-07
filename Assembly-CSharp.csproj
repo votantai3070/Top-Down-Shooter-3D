@@ -74,6 +74,9 @@
     <Compile Include="Assets\@Data\Scripts\Bullet.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Hovl Studio\Magic effects pack\Demo scene\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.58f2\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
       <Private>False</Private>
