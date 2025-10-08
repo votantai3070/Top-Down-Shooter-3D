@@ -53,8 +53,8 @@ public class PlayerAim : MonoBehaviour
 
     private void UpdateAimVisuals()
     {
-        Transform gunPoint = player.weapon.GunPoint();
-        Vector3 laserDirection = player.weapon.BulletDirection();
+        Transform gunPoint = player.weaponControllers.GunPoint();
+        Vector3 laserDirection = player.weaponControllers.BulletDirection();
         float laserTipLenght = .5f;
         float gunDistance = 4f;
 

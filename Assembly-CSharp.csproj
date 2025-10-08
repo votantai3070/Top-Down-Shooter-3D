@@ -62,16 +62,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\@Data\Scripts\LeftHandTargetTransform.cs" />
-    <Compile Include="Assets\@Data\Scripts\PlayerAnimationEvents.cs" />
+    <Compile Include="Assets\@Data\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\@Data\Scripts\Target.cs" />
-    <Compile Include="Assets\@Data\Scripts\PlayerAim.cs" />
-    <Compile Include="Assets\@Data\Scripts\Player.cs" />
+    <Compile Include="Assets\@Data\Scripts\Item_PickUp.cs" />
+    <Compile Include="Assets\@Data\Scripts\Player\PlayerAim.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\@Data\Scripts\PlayerWeaponVisuals.cs" />
-    <Compile Include="Assets\@Data\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\@Data\Scripts\Weapon.cs" />
+    <Compile Include="Assets\@Data\Scripts\Player\PlayerAnimationEvents.cs" />
+    <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponControllers.cs" />
+    <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponVisuals.cs" />
     <Compile Include="Assets\@Data\InputManagers\PlayerControls.cs" />
-    <Compile Include="Assets\@Data\Scripts\PlayerWeaponControllers.cs" />
     <Compile Include="Assets\@Data\Scripts\Bullet.cs" />
+    <Compile Include="Assets\@Data\Scripts\Player\Player.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Hovl Studio\Magic effects pack\Demo scene\Readme.txt" />
