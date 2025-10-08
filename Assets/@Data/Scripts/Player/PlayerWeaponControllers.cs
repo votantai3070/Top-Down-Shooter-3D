@@ -24,8 +24,6 @@ public class PlayerWeaponControllers : MonoBehaviour
 
     private void Start()
     {
-        EquipWeapon(0);
-
         player = GetComponent<Player>();
         AssignInputEvents();
 
@@ -46,6 +44,9 @@ public class PlayerWeaponControllers : MonoBehaviour
     private void EquipWeapon(int i)
     {
         currentWeapon = weaponSlots[i];
+
+        player.weaponVisuals.SwitchOffWeaponModels();
+        player.weaponVisuals.PlayWeaponEquipAnimation();
     }
 
     public void PickUpWeapon(Weapon newWeapon)
@@ -76,6 +77,9 @@ public class PlayerWeaponControllers : MonoBehaviour
 
         GetComponentInChildren<Animator>().SetTrigger("Fire");
     }
+    public Weapon CurrentWeapon() => currentWeapon;
+
+    public Transform GunPoint() => gunPoint;
 
     public Vector3 BulletDirection()
     {
@@ -92,9 +96,6 @@ public class PlayerWeaponControllers : MonoBehaviour
         return direction;
     }
 
-    public Weapon CurrentWeapon() => currentWeapon;
-
-    public Transform GunPoint() => gunPoint;
 
     #region Input Events
     private void AssignInputEvents()

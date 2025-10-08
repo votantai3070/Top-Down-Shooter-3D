@@ -70,6 +70,7 @@
     <Compile Include="Assets\@Data\Scripts\Weapon.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerAnimationEvents.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponControllers.cs" />
+    <Compile Include="Assets\@Data\Scripts\WeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponVisuals.cs" />
     <Compile Include="Assets\@Data\InputManagers\PlayerControls.cs" />
     <Compile Include="Assets\@Data\Scripts\Bullet.cs" />
