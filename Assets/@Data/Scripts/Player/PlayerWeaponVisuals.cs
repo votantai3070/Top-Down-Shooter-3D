@@ -4,7 +4,6 @@ using UnityEngine.Animations.Rigging;
 public class PlayerWeaponVisuals : MonoBehaviour
 {
     private Animator anim;
-    bool isGrabbingWeapon;
 
     private Player player;
 
@@ -38,32 +37,32 @@ public class PlayerWeaponVisuals : MonoBehaviour
         UpdateLeftHandIKWeight();
     }
 
+    public void PlayFireAnimation() => anim.SetTrigger("Fire");
+
     public void PlayReloadAnimation()
     {
-        if (isGrabbingWeapon)
-            return;
+
+
+        float reloadSpeed = player.weaponControllers.CurrentWeapon().reloadSpeed;
 
         anim.SetTrigger("Reload");
+        anim.SetFloat("ReloadSpeed", reloadSpeed);
         ReduceRigWeight();
     }
 
     public void PlayWeaponEquipAnimation()
     {
-        GrabType grabType = CurrentWeaponModel().grabType;
+        EquipType equipType = CurrentWeaponModel().equipType;
+
+        float equipmentSpeed = player.weaponControllers.CurrentWeapon().equipmentSpeed;
 
         ReduceLeftHandIKWeight();
         ReduceRigWeight();
-        anim.SetFloat("WeaponGrabType", ((float)grabType));
-        anim.SetTrigger("WeaponGrab");
-        SetBusyGrabbingWeaponTo(true);
+        anim.SetFloat("EquipType", ((float)equipType));
+        anim.SetFloat("EquipSpeed", equipmentSpeed);
+        anim.SetTrigger("EquipWeapon");
     }
 
-    public void SetBusyGrabbingWeaponTo(bool busy)
-    {
-        isGrabbingWeapon = busy;
-
-        anim.SetBool("BusyGrabbingWeapon", isGrabbingWeapon);
-    }
 
     public void SwitchOnCurrentWeaponModel()
     {

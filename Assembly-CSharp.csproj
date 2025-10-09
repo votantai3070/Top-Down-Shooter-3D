@@ -66,6 +66,7 @@
     <Compile Include="Assets\@Data\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\@Data\Scripts\Item_Pickup.cs" />
     <Compile Include="Assets\@Data\Scripts\Target.cs" />
+    <Compile Include="Assets\@Data\Scripts\Player\ObjectPool.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerAim.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\@Data\Scripts\Weapon.cs" />

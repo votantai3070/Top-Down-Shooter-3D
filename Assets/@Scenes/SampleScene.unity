@@ -233,6 +233,9 @@ MonoBehaviour:
     bulletsInMagazine: 30
     magazineCapacity: 30
     totalReserveAmmo: 60
+    reloadSpeed: 1
+    equipmentSpeed: 1
+    fireRate: 1
 --- !u!65 &13924713
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -499,7 +502,7 @@ Transform:
   m_GameObject: {fileID: 107451953}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0164, y: 0.0144, z: 0.365}
+  m_LocalPosition: {x: 0.0164, y: 0.0215, z: 0.365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2416,7 +2419,7 @@ Transform:
   m_GameObject: {fileID: 917562688}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.031, z: 0.292}
+  m_LocalPosition: {x: -0, y: 0.0364, z: 0.292}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4082,6 +4085,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9046452837297635980, guid: 959d8c31bd226a54496c21e80ed6267c, type: 3}
   m_PrefabInstance: {fileID: 699505720}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1804576760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1804576762}
+  - component: {fileID: 1804576761}
+  m_Layer: 0
+  m_Name: ObjectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1804576761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804576760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55590a089c25e284393db652654be9cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPrefab: {fileID: 850451683655697679, guid: 111108c73b071164d90dc3ccbb008f3f, type: 3}
+  poolSize: 1
+--- !u!4 &1804576762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804576760}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0219596, y: -0.116886295, z: 1.5630207}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1847569813
 GameObject:
   m_ObjectHideFlags: 0
@@ -4401,7 +4450,7 @@ Transform:
   m_GameObject: {fileID: 1930920132}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000005751848, y: 0.013240993, z: -0.0004414469, w: 0.99991226}
-  m_LocalPosition: {x: 0, y: -0, z: 0.195}
+  m_LocalPosition: {x: 0, y: 0.0399, z: 0.195}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4788,20 +4837,28 @@ MonoBehaviour:
     bulletsInMagazine: 0
     magazineCapacity: 0
     totalReserveAmmo: 0
+    reloadSpeed: 1
+    equipmentSpeed: 1
+    fireRate: 1
   bulletPrefab: {fileID: 850451683655697679, guid: 111108c73b071164d90dc3ccbb008f3f, type: 3}
-  bulletSpeed: 100
-  gunPoint: {fileID: 1930920133}
+  bulletSpeed: 20
   weaponHolder: {fileID: 7757871479299206260}
   maxSlotAllow: 2
   weaponSlots:
   - weaponType: 0
-    bulletsInMagazine: 0
-    magazineCapacity: 20
-    totalReserveAmmo: 50
-  - weaponType: 1
-    bulletsInMagazine: 0
-    magazineCapacity: 0
-    totalReserveAmmo: 30
+    bulletsInMagazine: 99999999
+    magazineCapacity: 99999999
+    totalReserveAmmo: 99999999
+    reloadSpeed: 1.769
+    equipmentSpeed: 2
+    fireRate: 5
+  - weaponType: 4
+    bulletsInMagazine: 50
+    magazineCapacity: 50
+    totalReserveAmmo: 100
+    reloadSpeed: 1.467
+    equipmentSpeed: 1.121
+    fireRate: 1
 --- !u!114 &2119050057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5447,7 +5504,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 311332876107488031}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.06757545, y: 0.027551344, z: -0.0046131145, w: 0.99732304}
   m_LocalPosition: {x: 0.0017, y: -0.0161, z: -0.105}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
@@ -5458,7 +5515,7 @@ Transform:
   - {fileID: 4167437704990066216}
   - {fileID: 86509892}
   m_Father: {fileID: 7757871479299206260}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -7.732, y: 3.215, z: -0.747}
 --- !u!114 &806839074765266979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5472,7 +5529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 4
-  grabType: 1
+  equipType: 0
   holdType: 3
   gunPoint: {fileID: 86509892}
   holdPoint: {fileID: 4167437704990066216}
@@ -6031,7 +6088,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6874472791920432511}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.04535287, y: 0.03156388, z: -0.00083348085, w: 0.998472}
   m_LocalPosition: {x: -0.0027, y: 0, z: -0.091}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6041,7 +6098,7 @@ Transform:
   - {fileID: 8958462743010062173}
   - {fileID: 1930920133}
   m_Father: {fileID: 7757871479299206260}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -5.193, y: 3.633, z: -0.26}
 --- !u!4 &2334946819258050761
 Transform:
   m_ObjectHideFlags: 0
@@ -6635,7 +6692,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687033441815968482}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.07676541, y: 0.014022493, z: -0.0011894846, w: 0.99694985}
   m_LocalPosition: {x: -0.0015, y: -0.0075, z: -0.1569}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6645,7 +6702,7 @@ Transform:
   - {fileID: 6202205851664955388}
   - {fileID: 917562689}
   m_Father: {fileID: 7757871479299206260}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -8.803, y: 1.632, z: -0.262}
 --- !u!114 &3085844442794834589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6659,7 +6716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 1
-  grabType: 0
+  equipType: 0
   holdType: 1
   gunPoint: {fileID: 917562689}
   holdPoint: {fileID: 6202205851664955388}
@@ -8985,7 +9042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 0
-  grabType: 0
+  equipType: 0
   holdType: 1
   gunPoint: {fileID: 1930920133}
   holdPoint: {fileID: 8958462743010062173}
@@ -9409,7 +9466,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4117610496094795725}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.07056513, y: 0.030847564, z: -0.005242822, w: 0.9970164}
   m_LocalPosition: {x: -0.0159, y: 0, z: -0.1384}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9419,7 +9476,7 @@ Transform:
   - {fileID: 6049099285384138923}
   - {fileID: 107451954}
   m_Father: {fileID: 7757871479299206260}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -8.07, y: 3.605, z: -0.857}
 --- !u!114 &7551352357511663530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9433,7 +9490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 3
-  grabType: 1
+  equipType: 0
   holdType: 2
   gunPoint: {fileID: 107451954}
   holdPoint: {fileID: 6049099285384138923}
@@ -9700,7 +9757,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046206724691659492}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.057898693, y: 0.03549837, z: 0.0041455613, w: 0.9976825}
   m_LocalPosition: {x: 0.004, y: 0.0027, z: -0.1926}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9710,7 +9767,7 @@ Transform:
   - {fileID: 4058444178908263484}
   - {fileID: 538285902}
   m_Father: {fileID: 7757871479299206260}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -6.651, y: 4.062, z: 0.24}
 --- !u!114 &8255331796695149900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9724,7 +9781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 2
-  grabType: 1
+  equipType: 0
   holdType: 3
   gunPoint: {fileID: 538285902}
   holdPoint: {fileID: 4058444178908263484}
@@ -10313,3 +10370,4 @@ SceneRoots:
   - {fileID: 9116076525890452912}
   - {fileID: 13924711}
   - {fileID: 569754845667435135}
+  - {fileID: 1804576762}

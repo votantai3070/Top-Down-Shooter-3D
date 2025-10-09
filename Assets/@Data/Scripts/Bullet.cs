@@ -6,11 +6,26 @@ public class Bullet : MonoBehaviour
 
     private Rigidbody rb => GetComponent<Rigidbody>();
 
+    private void OnEnable()
+    {
+        Invoke(nameof(Return), 5f);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+    }
+
+    void Return()
+    {
+        ObjectPool.instance.ReturnPool(gameObject);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         CreateInpactFx(collision);
 
-        Destroy(gameObject);
+        ObjectPool.instance.ReturnPool(gameObject);
     }
 
     private void CreateInpactFx(Collision collision)
