@@ -23,8 +23,18 @@ public class Weapon
     [Space]
     [Header("Shooting spesifics")]
     public ShootType shootType;
+    public int bulletsPerShot;
+    public float defaulFireRate;
     public float fireRate = 1; //bullets per second
     private float lastShootTime;
+
+    [Header("Burst fire")]
+    public bool burstAvailable;
+    public bool burstActive;
+
+    public int burstModeBulletsPerShot;
+    public float burstModeFireRate;
+    public float burstFireDelay = .1f;
 
     [Header("Magazine details")]
     public int bulletsInMagazine; // Current Bullet
@@ -75,11 +85,43 @@ public class Weapon
 
     #endregion
 
+    #region Burst methods
+
+    public bool BurstActivated()
+    {
+        if (weaponType == WeaponType.Shotgun)
+        {
+            burstFireDelay = 0;
+            return true;
+        }
+
+        return burstActive;
+    }
+
+    public void ToggleBurst()
+    {
+        if (!burstAvailable) return;
+
+        burstActive = !burstActive;
+
+        if (burstActive)
+        {
+            bulletsPerShot = burstModeBulletsPerShot;
+            fireRate = burstModeFireRate;
+        }
+        else
+        {
+            bulletsPerShot = 1;
+            fireRate = defaulFireRate;
+        }
+    }
+
+    #endregion
+
     public bool CanShoot()
     {
-        if (HaveEnoughBullets() & ReadyToFire())
+        if (HaveEnoughBullets() && ReadyToFire())
         {
-            bulletsInMagazine--;
             return true;
         }
 

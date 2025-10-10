@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
         weaponControllers = GetComponent<PlayerWeaponControllers>();
         weaponVisuals = GetComponent<PlayerWeaponVisuals>();
     }
+
+
     private void OnEnable()
     {
         controls.Enable();
