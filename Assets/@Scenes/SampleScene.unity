@@ -244,6 +244,8 @@ MonoBehaviour:
     totalReserveAmmo: 60
     reloadSpeed: 1
     equipmentSpeed: 1
+    gunDistance: 6
+    cameraDistance: 6
     baseSpread: 0
     maximumSpread: 3
     spreadIncreaseRate: 0.15
@@ -591,7 +593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 139146250}
   - component: {fileID: 139146249}
-  - component: {fileID: 139146248}
+  - component: {fileID: 139146252}
   - component: {fileID: 139146251}
   m_Layer: 0
   m_Name: CinemachineCamera
@@ -600,25 +602,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &139146248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 139146247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TrackerSettings:
-    BindingMode: 4
-    PositionDamping: {x: 0, y: 0, z: 0}
-    AngularDampingMode: 0
-    RotationDamping: {x: 1, y: 1, z: 1}
-    QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 6, z: -3}
 --- !u!114 &139146249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,8 +653,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 139146247}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.52573115, y: 0.000000022933735, z: -0.00000001417383, w: 0.8506508}
-  m_LocalPosition: {x: 5.4940996, y: 1, z: 4.7348}
+  m_LocalRotation: {x: 0.5256998, y: -0.00000027384755, z: 0.00000016923322, w: 0.85067016}
+  m_LocalPosition: {x: 5.4941, y: 1.8943949, z: 4.2875204}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -701,6 +684,37 @@ MonoBehaviour:
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
   Damping: {x: 1, y: 1}
+  Lookahead:
+    Enabled: 0
+    Time: 0
+    Smoothing: 0
+    IgnoreY: 0
+--- !u!114 &139146252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139146247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraDistance: 1
+  DeadZoneDepth: 0
+  Composition:
+    ScreenPosition: {x: 0, y: 0}
+    DeadZone:
+      Enabled: 0
+      Size: {x: 0.2, y: 0.2}
+    HardLimits:
+      Enabled: 0
+      Size: {x: 0.8, y: 0.8}
+      Offset: {x: 0, y: 0}
+  CenterOnActivate: 1
+  TargetOffset: {x: 0, y: 6, z: -3}
+  Damping: {x: 0, y: 0, z: 0}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -962,6 +976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 2
+  hangType: 1
 --- !u!1001 &292231898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1172,8 +1187,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.52573115, y: 0.000000022933731, z: -0.000000014173826, w: 0.8506508}
-  m_LocalPosition: {x: 5.4940996, y: 1, z: 4.7348}
+  m_LocalRotation: {x: 0.5256998, y: -0.0000002738475, z: 0.00000016923313, w: 0.85067016}
+  m_LocalPosition: {x: 5.4941, y: 1.8943949, z: 4.2875204}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2296,6 +2311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 1
+  hangType: 2
 --- !u!1001 &897145363
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2374,7 +2390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &897574960
 Transform:
   m_ObjectHideFlags: 0
@@ -2383,15 +2399,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897574959}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6591408, y: 0.027135886, z: 0.008935226, w: 0.7514767}
-  m_LocalPosition: {x: 0.119, y: -0.013, z: -0.123}
+  m_LocalRotation: {x: 0.00670574, y: 0.8611506, z: -0.06324345, w: -0.5043561}
+  m_LocalPosition: {x: 0.053, y: -0.192, z: 0.001}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 37974707433681657}
   - {fileID: 4876784280002187946}
   m_Father: {fileID: 649674055774078206}
-  m_LocalEulerAnglesHint: {x: 81.961, y: 22.077, z: 20.599}
+  m_LocalEulerAnglesHint: {x: 5.864, y: 240.936, z: 4.344}
 --- !u!114 &897574961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2405,6 +2421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 3
+  hangType: 0
 --- !u!1 &917562688
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,6 +2563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 4
+  hangType: 1
 --- !u!1001 &1040483244
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2679,6 +2697,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1061962464}
+  - component: {fileID: 1061962465}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -2703,6 +2722,19 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1061962465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061962463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7183a6298b126264e88d9af19a6ed016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceChangeRate: 1
 --- !u!1001 &1097397626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3471,6 +3503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 0
+  hangType: 2
 --- !u!1 &1425047539
 GameObject:
   m_ObjectHideFlags: 0
@@ -4859,6 +4892,8 @@ MonoBehaviour:
     totalReserveAmmo: 0
     reloadSpeed: 1
     equipmentSpeed: 1
+    gunDistance: 6
+    cameraDistance: 6
     baseSpread: 0
     maximumSpread: 3
     spreadIncreaseRate: 0.15
@@ -4882,6 +4917,8 @@ MonoBehaviour:
     totalReserveAmmo: 99999999
     reloadSpeed: 1.769
     equipmentSpeed: 2
+    gunDistance: 2.5
+    cameraDistance: 1
     baseSpread: 15
     maximumSpread: 15
     spreadIncreaseRate: 0.15
@@ -4900,6 +4937,68 @@ MonoBehaviour:
     totalReserveAmmo: 100
     reloadSpeed: 1.3
     equipmentSpeed: 1.2
+    gunDistance: 6
+    cameraDistance: 3
+    baseSpread: 0.5
+    maximumSpread: 3
+    spreadIncreaseRate: 0.15
+  - weaponType: 1
+    shootType: 0
+    bulletsPerShot: 1
+    defaulFireRate: 10
+    fireRate: 10
+    burstAvailable: 1
+    burstActive: 0
+    burstModeBulletsPerShot: 3
+    burstModeFireRate: 1
+    burstFireDelay: 0.2
+    bulletsInMagazine: 50
+    magazineCapacity: 100
+    totalReserveAmmo: 999999999
+    reloadSpeed: 2
+    equipmentSpeed: 2
+    gunDistance: 4
+    cameraDistance: 3
+    baseSpread: 0.5
+    maximumSpread: 3
+    spreadIncreaseRate: 0.15
+  - weaponType: 0
+    shootType: 0
+    bulletsPerShot: 1
+    defaulFireRate: 10
+    fireRate: 10
+    burstAvailable: 1
+    burstActive: 0
+    burstModeBulletsPerShot: 3
+    burstModeFireRate: 1
+    burstFireDelay: 0.2
+    bulletsInMagazine: 50
+    magazineCapacity: 100
+    totalReserveAmmo: 999999999
+    reloadSpeed: 2
+    equipmentSpeed: 2
+    gunDistance: 4
+    cameraDistance: 3
+    baseSpread: 0.5
+    maximumSpread: 3
+    spreadIncreaseRate: 0.15
+  - weaponType: 4
+    shootType: 0
+    bulletsPerShot: 1
+    defaulFireRate: 10
+    fireRate: 10
+    burstAvailable: 1
+    burstActive: 0
+    burstModeBulletsPerShot: 3
+    burstModeFireRate: 1
+    burstFireDelay: 0.2
+    bulletsInMagazine: 50
+    magazineCapacity: 100
+    totalReserveAmmo: 999999999
+    reloadSpeed: 2
+    equipmentSpeed: 2
+    gunDistance: 4
+    cameraDistance: 3
     baseSpread: 0.5
     maximumSpread: 3
     spreadIncreaseRate: 0.15
@@ -5573,7 +5672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 4
-  equipType: 0
+  equipType: 1
   holdType: 3
   gunPoint: {fileID: 86509892}
   holdPoint: {fileID: 4167437704990066216}
@@ -9534,7 +9633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 3
-  equipType: 0
+  equipType: 1
   holdType: 2
   gunPoint: {fileID: 107451954}
   holdPoint: {fileID: 6049099285384138923}
@@ -9825,7 +9924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 2
-  equipType: 0
+  equipType: 1
   holdType: 3
   gunPoint: {fileID: 538285902}
   holdPoint: {fileID: 4058444178908263484}

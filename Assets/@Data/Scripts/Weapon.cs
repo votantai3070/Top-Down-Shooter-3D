@@ -45,6 +45,10 @@ public class Weapon
     public float reloadSpeed = 1;// How fast character reload weapon
     [Range(1, 2)]
     public float equipmentSpeed = 1; // How fast character equip weapon
+    [Range(2, 12)]
+    public float gunDistance = 6f;
+    [Range(1, 8)]
+    public float cameraDistance = 6;
 
     [Header("Spread")]
     public float baseSpread;

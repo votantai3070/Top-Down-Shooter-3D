@@ -1,13 +1,16 @@
 using UnityEngine;
 
+public enum HangType
+{
+    LowBackHang, BackHang, SideHang
+}
+
 public class BackupWeaponModel : MonoBehaviour
 {
     public WeaponType weaponType;
+    [SerializeField] private HangType hangType;
 
-    private Player player;
 
-    private void Start()
-    {
-        player = gameObject.GetComponentInParent<Player>();
-    }
+    public void Activate(bool activated) => gameObject.SetActive(activated);
+    public bool HangTypeIs(HangType hangType) => this.hangType == hangType;
 }

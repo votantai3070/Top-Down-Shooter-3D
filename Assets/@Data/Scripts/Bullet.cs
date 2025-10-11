@@ -2,23 +2,65 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    private BoxCollider cd;
+    private Rigidbody rb;
+    private MeshRenderer meshRenderer;
+    private TrailRenderer trailRenderer;
+
+
     [SerializeField] GameObject bulletImpactFX;
 
-    private Rigidbody rb => GetComponent<Rigidbody>();
 
-    private void OnEnable()
+    private Vector3 startPosition;
+    private float flyDistance;
+    private bool bulletDisabled;
+
+    private void Awake()
     {
-        Invoke(nameof(Return), 5f);
+        cd = GetComponent<BoxCollider>();
+        rb = GetComponent<Rigidbody>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        trailRenderer = GetComponent<TrailRenderer>();
     }
 
-    private void OnDisable()
+
+    private void Update()
     {
-        CancelInvoke();
+        FadeTrailIfNeeded();
+        DisabledBulletIfNeeded();
+        ReturnToPoolIfNeeded();
+    }
+    public void BulletSetup(float _flyDistance)
+    {
+        bulletDisabled = false;
+        cd.enabled = true;
+        meshRenderer.enabled = true;
+
+        trailRenderer.time = .25f;
+        startPosition = transform.position;
+        this.flyDistance = _flyDistance + .5f; // magic number .5f is a length of tip the laser ( Check method UpdateAimVisuals on PlayerAim script)
     }
 
-    void Return()
+    private void ReturnToPoolIfNeeded()
     {
-        ObjectPool.instance.ReturnPool(gameObject);
+        if (trailRenderer.time < 0)
+            ObjectPool.instance.ReturnPool(gameObject);
+    }
+
+    private void DisabledBulletIfNeeded()
+    {
+        if (Vector3.Distance(startPosition, transform.position) > flyDistance && !bulletDisabled)
+        {
+            cd.enabled = false;
+            meshRenderer.enabled = false;
+            bulletDisabled = true;
+        }
+    }
+
+    private void FadeTrailIfNeeded()
+    {
+        if (Vector3.Distance(startPosition, transform.position) > flyDistance - 1.5f)
+            trailRenderer.time -= 2 * Time.deltaTime; //magic number 2 is choosen through testing
     }
 
     private void OnCollisionEnter(Collision collision)

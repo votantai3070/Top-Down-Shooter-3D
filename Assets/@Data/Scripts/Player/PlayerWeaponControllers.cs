@@ -33,7 +33,7 @@ public class PlayerWeaponControllers : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("weaponReady: " + weaponReady);
+        //Debug.Log("weaponReady: " + weaponReady);
 
         if (isShooting)
             Shoot();
@@ -60,10 +60,15 @@ public class PlayerWeaponControllers : MonoBehaviour
 
     private void EquipWeapon(int i)
     {
+        if (i >= weaponSlots.Count) return;
+
         SetWeaponReady(false);
+
 
         currentWeapon = weaponSlots[i];
         player.weaponVisuals.PlayWeaponEquipAnimation();
+
+        CameraManager.instance.ChangeCameraDistance(CurrentWeapon().cameraDistance);
     }
 
     public void PickUpWeapon(Weapon newWeapon)
@@ -134,8 +139,11 @@ public class PlayerWeaponControllers : MonoBehaviour
         newBullet.transform.position = GunPoint().position;
         newBullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
 
-
         Rigidbody rbNewBullet = newBullet.GetComponent<Rigidbody>();
+
+        Bullet bulletScript = newBullet.GetComponent<Bullet>();
+
+        bulletScript.BulletSetup(player.weaponControllers.CurrentWeapon().gunDistance);
 
         Vector3 bulletDirection = currentWeapon.ApplySpread(BulletDirection());
 
@@ -181,6 +189,17 @@ public class PlayerWeaponControllers : MonoBehaviour
 
     public bool HasOnlyOneWeapon() => weaponSlots.Count <= 1;
 
+    public bool HasWeaponTypeInInventory(WeaponType weaponType)
+    {
+        foreach (Weapon w in weaponSlots)
+        {
+            if (w.weaponType == weaponType)
+                return true;
+        }
+
+        return false;
+    }
+
 
     #region Input Events
     private void AssignInputEvents()
@@ -192,6 +211,9 @@ public class PlayerWeaponControllers : MonoBehaviour
 
         controls.Character.EquipSlot1.performed += ctx => EquipWeapon(0);
         controls.Character.EquipSlot2.performed += ctx => EquipWeapon(1);
+        controls.Character.EquipSlot3.performed += ctx => EquipWeapon(2);
+        controls.Character.EquipSlot4.performed += ctx => EquipWeapon(3);
+        controls.Character.EquipSlot5.performed += ctx => EquipWeapon(4);
 
         controls.Character.DropCurrentWeapon.performed += ctx => DropWeapon();
 
