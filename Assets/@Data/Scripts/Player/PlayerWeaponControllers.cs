@@ -8,6 +8,7 @@ public class PlayerWeaponControllers : MonoBehaviour
     private const float REFERENCE_BULLET_SPEED = 20;
     // This is the default speed form which our mass formula is derived.
 
+    [SerializeField] private Weapon_Data defaultWeaponData;
     [SerializeField] private Weapon currentWeapon;
     private bool weaponReady;
     private bool isShooting;
@@ -38,14 +39,17 @@ public class PlayerWeaponControllers : MonoBehaviour
         if (isShooting)
             Shoot();
 
-        if (Input.GetKeyDown(KeyCode.B))
-            currentWeapon.ToggleBurst();
     }
 
     #region Slot Management - Pickup/Equip/Drop/Ready Weapon
 
     private void EquipStartingWeapon()
     {
+        if (weaponSlots.Count == 0)
+            weaponSlots.Add(new Weapon(defaultWeaponData));
+
+        weaponSlots[0] = new Weapon(defaultWeaponData);
+
         EquipWeapon(0);
     }
 
@@ -71,7 +75,7 @@ public class PlayerWeaponControllers : MonoBehaviour
         CameraManager.instance.ChangeCameraDistance(CurrentWeapon().cameraDistance);
     }
 
-    public void PickUpWeapon(Weapon newWeapon)
+    public void PickUpWeapon(Weapon_Data newWeaponData)
     {
         if (weaponSlots.Count >= maxSlotAllow)
         {
@@ -79,13 +83,18 @@ public class PlayerWeaponControllers : MonoBehaviour
             return;
         }
 
-        foreach (Weapon w in weaponSlots)
+        foreach (var w in weaponSlots)
         {
-            if (w.weaponType != newWeapon.weaponType)
+            if (w.weaponType == newWeaponData.weaponType)
             {
-                weaponSlots.Add(newWeapon);
+                Debug.Log("Has Same Weapon");
+                return;
             }
         }
+
+        Weapon newWeapon = new(newWeaponData);
+
+        weaponSlots.Add(newWeapon);
 
         player.weaponVisuals.SwitchOnBackupWeaponModel();
     }
@@ -134,7 +143,7 @@ public class PlayerWeaponControllers : MonoBehaviour
         currentWeapon.bulletsInMagazine--;
 
 
-        GameObject newBullet = ObjectPool.instance.Get();
+        GameObject newBullet = ObjectPool.instance.GetObject(bulletPrefab);
 
         newBullet.transform.position = GunPoint().position;
         newBullet.transform.rotation = Quaternion.LookRotation(GunPoint().forward);
@@ -160,19 +169,6 @@ public class PlayerWeaponControllers : MonoBehaviour
 
     public Weapon CurrentWeapon() => currentWeapon;
 
-    public Weapon BackupWeapon()
-    {
-        foreach (Weapon w in weaponSlots)
-        {
-            if (w != currentWeapon)
-            {
-                return w;
-            }
-
-        }
-        return null;
-    }
-
     public Transform GunPoint() => player.weaponVisuals.CurrentWeaponModel().gunPoint;
 
     public Vector3 BulletDirection()
@@ -189,15 +185,15 @@ public class PlayerWeaponControllers : MonoBehaviour
 
     public bool HasOnlyOneWeapon() => weaponSlots.Count <= 1;
 
-    public bool HasWeaponTypeInInventory(WeaponType weaponType)
+    public Weapon WeaponInSlots(WeaponType weaponType)
     {
         foreach (Weapon w in weaponSlots)
         {
             if (w.weaponType == weaponType)
-                return true;
+                return w;
         }
 
-        return false;
+        return null;
     }
 
 
@@ -224,6 +220,8 @@ public class PlayerWeaponControllers : MonoBehaviour
                 Reload();
             }
         };
+
+        controls.Character.ToggleWeaponMode.performed += ctx => currentWeapon.ToggleBurst();
     }
 
     #endregion

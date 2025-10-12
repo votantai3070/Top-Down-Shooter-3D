@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -44,7 +45,12 @@ public class Bullet : MonoBehaviour
     private void ReturnToPoolIfNeeded()
     {
         if (trailRenderer.time < 0)
-            ObjectPool.instance.ReturnPool(gameObject);
+            ReturnBulletPool();
+    }
+
+    private void ReturnBulletPool()
+    {
+        ObjectPool.instance.DelayReturnToPool(gameObject);
     }
 
     private void DisabledBulletIfNeeded()
@@ -67,7 +73,7 @@ public class Bullet : MonoBehaviour
     {
         CreateInpactFx(collision);
 
-        ObjectPool.instance.ReturnPool(gameObject);
+        ReturnBulletPool();
     }
 
     private void CreateInpactFx(Collision collision)
@@ -76,9 +82,11 @@ public class Bullet : MonoBehaviour
         {
             ContactPoint contact = collision.contacts[0];
 
-            GameObject newImpactFx = Instantiate(bulletImpactFX, contact.point, Quaternion.LookRotation(contact.normal));
+            GameObject newImpactFx = ObjectPool.instance.GetObject(bulletImpactFX);
+            newImpactFx.transform.position = contact.point;
 
-            Destroy(newImpactFx, 1f);
+            ObjectPool.instance.DelayReturnToPool(newImpactFx, 1);
         }
     }
+
 }

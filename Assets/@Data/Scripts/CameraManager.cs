@@ -7,8 +7,10 @@ public class CameraManager : MonoBehaviour
     private CinemachineCamera cineCamera;
     private CinemachinePositionComposer positionComposer;
 
-    private float targetCameraDistance;
+    [Header("Camera Distance")]
+    [SerializeField] bool canChangeCameraDistance;
     [SerializeField] private float distanceChangeRate;
+    private float targetCameraDistance;
 
     private void Awake()
     {
@@ -27,11 +29,13 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        //UpdateCameraDistance();
+        UpdateCameraDistance();
     }
 
     private void UpdateCameraDistance()
     {
+        if (!canChangeCameraDistance) return;
+
         float currentCameraDistance = positionComposer.CameraDistance;
         float cameraTreshold = 0.1f;
 

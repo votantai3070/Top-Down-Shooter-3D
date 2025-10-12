@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool instance;
 
-    [SerializeField] private GameObject objectPrefab;
     [SerializeField] private int poolSize = 5;
 
-    Queue<GameObject> objectPool;
+    Dictionary<GameObject, Queue<GameObject>> poolDict = new();
 
     private void Awake()
     {
@@ -18,51 +18,69 @@ public class ObjectPool : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void Start()
+    private void InitializeNewPool(GameObject prefab)
     {
-        objectPool = new Queue<GameObject>();
-        CreateInitialPool();
-    }
+        poolDict[prefab] = new Queue<GameObject>();
 
-    private void CreateInitialPool()
-    {
         for (int i = 0; i < poolSize; i++)
         {
-            CreateNewObject();
+            CreateNewObject(prefab);
         }
     }
-
-    private void CreateNewObject()
+    private void CreateNewObject(GameObject prefab)
     {
-        GameObject obj = Instantiate(objectPrefab, transform);
-        obj.SetActive(false);
-        objectPool.Enqueue(obj);
+        GameObject newObj = Instantiate(prefab, transform);
+        newObj.AddComponent<PooledObject>().originalPrefab = prefab;
+        newObj.SetActive(false);
+
+        poolDict[prefab].Enqueue(newObj);
     }
 
-    public GameObject Get()
+    public GameObject GetObject(GameObject prefab)
     {
-        if (objectPool.Count == 0)
-            CreateNewObject();
+        if (!poolDict.ContainsKey(prefab))
+            InitializeNewPool(prefab);
 
-        GameObject bulletToGet = objectPool.Dequeue();
+        if (poolDict[prefab].Count == 0)
+            CreateNewObject(prefab);
+
+        GameObject objectToGet = poolDict[prefab].Dequeue();
 
         // reset trail trước khi bật lại
-        var trail = bulletToGet.GetComponent<TrailRenderer>();
-        if (trail != null)
+        if (objectToGet.TryGetComponent<TrailRenderer>(out var trail))
         {
             trail.Clear(); // xoá toàn bộ dữ liệu vẽ cũ
         }
 
-        bulletToGet.SetActive(true);
-        bulletToGet.transform.parent = null;
+        objectToGet.SetActive(true);
+        objectToGet.transform.parent = null;
 
-        return bulletToGet;
+        return objectToGet;
     }
 
-    public void ReturnPool(GameObject obj)
+    #region Return To Pool
+
+    public void ReturnToPool(GameObject objectToReturn)
     {
-        obj.SetActive(false);
-        objectPool.Enqueue(obj);
-        obj.transform.parent = transform;
+        GameObject originalPrefab = objectToReturn.GetComponent<PooledObject>().originalPrefab;
+
+        objectToReturn.SetActive(false);
+        objectToReturn.transform.parent = transform;
+
+        poolDict[originalPrefab].Enqueue(objectToReturn);
     }
+
+    public void DelayReturnToPool(GameObject objectToReturn, float delay = .001f)
+    {
+        StartCoroutine(DelayReturn(delay, objectToReturn));
+    }
+
+    private IEnumerator DelayReturn(float delay, GameObject objectToReturn)
+    {
+        yield return new WaitForSeconds(delay);
+
+        ReturnToPool(objectToReturn);
+    }
+
+    #endregion
 }
