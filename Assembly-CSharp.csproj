@@ -61,20 +61,23 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.58f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\@Data\Scripts\Interactable.cs" />
     <Compile Include="Assets\@Data\Scripts\BackupWeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerMovement.cs" />
-    <Compile Include="Assets\@Data\Scripts\Item_Pickup.cs" />
     <Compile Include="Assets\@Data\Scripts\Weapon_Data.cs" />
     <Compile Include="Assets\@Data\Scripts\Target.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\ObjectPool.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerAim.cs" />
+    <Compile Include="Assets\@Data\Scripts\Pickup_Ammo.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\@Data\Scripts\Weapon.cs" />
     <Compile Include="Assets\@Data\Scripts\PooledObject.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerAnimationEvents.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponControllers.cs" />
     <Compile Include="Assets\@Data\Scripts\WeaponModel.cs" />
+    <Compile Include="Assets\@Data\Scripts\Pickup_Weapon.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponVisuals.cs" />
+    <Compile Include="Assets\@Data\Scripts\Player\PlayerInteraction.cs" />
     <Compile Include="Assets\@Data\InputManagers\PlayerControls.cs" />
     <Compile Include="Assets\@Data\Scripts\CameraManager.cs" />
     <Compile Include="Assets\@Data\Scripts\Bullet.cs" />

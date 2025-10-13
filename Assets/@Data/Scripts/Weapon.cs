@@ -61,6 +61,8 @@ public class Weapon
     private float spreadCooldown = 1;
     #endregion
 
+    public Weapon_Data weaponData { get; private set; } //serves as default weapon data
+
     public Weapon(Weapon_Data weaponData)
     {
         bulletsInMagazine = weaponData.bulletsInMagazine;
@@ -88,6 +90,7 @@ public class Weapon
         cameraDistance = weaponData.cameraDistance;
 
         defaulFireRate = fireRate;
+        this.weaponData = weaponData;
     }
 
     #region Spread methods

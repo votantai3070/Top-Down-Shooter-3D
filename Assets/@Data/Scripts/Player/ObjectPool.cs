@@ -10,12 +10,20 @@ public class ObjectPool : MonoBehaviour
 
     Dictionary<GameObject, Queue<GameObject>> poolDict = new();
 
+    [Header("To Initialize")]
+    [SerializeField] GameObject weaponPickup;
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        InitializeNewPool(weaponPickup);
     }
 
     private void InitializeNewPool(GameObject prefab)

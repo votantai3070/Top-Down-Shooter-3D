@@ -24,6 +24,8 @@ public class PlayerWeaponControllers : MonoBehaviour
     [SerializeField] private int maxSlotAllow = 2;
     [SerializeField] private List<Weapon> weaponSlots;
 
+    [SerializeField] private GameObject weaponPickupPrefab;
+
     private void Start()
     {
         player = GetComponent<Player>();
@@ -57,9 +59,16 @@ public class PlayerWeaponControllers : MonoBehaviour
     {
         if (HasOnlyOneWeapon()) return;
 
-        weaponSlots.Remove(currentWeapon);
+        CreateTheWeaponOnTheGround();
 
+        weaponSlots.Remove(currentWeapon);
         EquipWeapon(0);
+    }
+
+    private void CreateTheWeaponOnTheGround()
+    {
+        GameObject dropped = ObjectPool.instance.GetObject(weaponPickupPrefab);
+        dropped.GetComponent<Pickup_Weapon>()?.SetupPickupWeapon(currentWeapon, transform);
     }
 
     private void EquipWeapon(int i)
@@ -75,24 +84,25 @@ public class PlayerWeaponControllers : MonoBehaviour
         CameraManager.instance.ChangeCameraDistance(CurrentWeapon().cameraDistance);
     }
 
-    public void PickUpWeapon(Weapon_Data newWeaponData)
+    public void PickUpWeapon(Weapon newWeapon)
     {
-        if (weaponSlots.Count >= maxSlotAllow)
+
+
+        if (WeaponInSlots(newWeapon.weaponType) != null)
         {
-            Debug.Log("No Slots Available");
+            WeaponInSlots(newWeapon.weaponType).totalReserveAmmo += newWeapon.bulletsInMagazine;
             return;
         }
 
-        foreach (var w in weaponSlots)
+        if (weaponSlots.Count >= maxSlotAllow && newWeapon.weaponType != currentWeapon.weaponType)
         {
-            if (w.weaponType == newWeaponData.weaponType)
-            {
-                Debug.Log("Has Same Weapon");
-                return;
-            }
-        }
+            int weaponIndex = weaponSlots.IndexOf(currentWeapon);
 
-        Weapon newWeapon = new(newWeaponData);
+            CreateTheWeaponOnTheGround();
+            weaponSlots[weaponIndex] = newWeapon;
+            EquipWeapon(weaponIndex);
+            return;
+        }
 
         weaponSlots.Add(newWeapon);
 
