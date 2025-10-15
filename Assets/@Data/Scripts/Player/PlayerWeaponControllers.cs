@@ -86,8 +86,6 @@ public class PlayerWeaponControllers : MonoBehaviour
 
     public void PickUpWeapon(Weapon newWeapon)
     {
-
-
         if (WeaponInSlots(newWeapon.weaponType) != null)
         {
             WeaponInSlots(newWeapon.weaponType).totalReserveAmmo += newWeapon.bulletsInMagazine;
