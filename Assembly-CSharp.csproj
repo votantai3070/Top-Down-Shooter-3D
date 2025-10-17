@@ -75,6 +75,7 @@
     <Compile Include="Assets\@Data\Scripts\Enemy\ChaseState_Melee.cs" />
     <Compile Include="Assets\@Data\Scripts\Target.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\RecoveryState_Melee.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\AttackState_Melee.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerAim.cs" />
     <Compile Include="Assets\@Data\Scripts\Object Pool\PooledObject.cs" />

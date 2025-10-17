@@ -11,6 +11,8 @@ public class IdleState_Melee : EnemyState
     {
         base.Enter();
 
+        enemy.HiddenWeapon();
+
         stateTimer = enemyBase.idleTime;
     }
 

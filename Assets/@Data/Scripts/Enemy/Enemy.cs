@@ -3,15 +3,20 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public float turnSpeed;
 
-    public float aggressiveRange;
+    [SerializeField] private Transform hiddenWeapon;
+    [SerializeField] private Transform pullWeapon;
 
     [Header("Idle data")]
     public float idleTime;
+    public float aggressiveRange;
 
     [Header("Move data")]
     public float moveSpeed;
+    public float chaseSpeed;
+    public float turnSpeed;
+    private bool manualMovement;
+    private bool manualRotation;
 
     [SerializeField] private Transform[] patrolPoints;
     private int currentPatrolIndex;
@@ -42,6 +47,14 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void ActivateManualMovement(bool manualMovement) => this.manualMovement = manualMovement;
+
+    public bool ManualMovementActive() => manualMovement;
+
+    public void ActivateManualRotation(bool manualRotation) => this.manualRotation = manualRotation;
+
+    public bool ManualRotationActive() => manualRotation;
+
     public void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
 
     public bool PlayerInAggresionRange() => Vector3.Distance(transform.position, player.position) < aggressiveRange;
@@ -57,7 +70,6 @@ public class Enemy : MonoBehaviour
 
         return destination;
     }
-
 
     private void InitializePatrolPoints()
     {
@@ -78,10 +90,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(transform.position, aggressiveRange);
-    }
+        Gizmos.DrawWireSphere(transform.position, aggressiveRange);
+        Gizmos.color = Color.yellow;
 
+
+    }
+    public void PullWeapon()
+    {
+        hiddenWeapon.gameObject.SetActive(false);
+        pullWeapon.gameObject.SetActive(true);
+    }
+    public void HiddenWeapon()
+    {
+        hiddenWeapon.gameObject.SetActive(true);
+        pullWeapon.gameObject.SetActive(false);
+    }
 
 }
