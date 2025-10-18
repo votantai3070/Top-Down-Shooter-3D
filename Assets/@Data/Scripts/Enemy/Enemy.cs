@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    protected int healthPoints = 24;
 
     [SerializeField] private Transform hiddenWeapon;
     [SerializeField] private Transform pullWeapon;
@@ -45,6 +47,23 @@ public class Enemy : MonoBehaviour
     protected virtual void Update()
     {
 
+    }
+
+    public virtual void HitImpact(Vector3 force, Vector3 hitPoint, Rigidbody rb)
+    {
+        StartCoroutine(HitImpactCoroutine(force, hitPoint, rb));
+    }
+
+    IEnumerator HitImpactCoroutine(Vector3 force, Vector3 hitPoint, Rigidbody rb)
+    {
+        yield return new WaitForSeconds(.1f);
+
+        rb.AddForceAtPosition(force, hitPoint, ForceMode.Impulse);
+    }
+
+    public virtual void GetHit()
+    {
+        healthPoints--;
     }
 
     public void ActivateManualMovement(bool manualMovement) => this.manualMovement = manualMovement;

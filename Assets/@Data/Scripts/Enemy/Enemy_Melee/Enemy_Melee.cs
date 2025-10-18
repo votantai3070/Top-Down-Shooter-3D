@@ -1,25 +1,32 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public struct AttackData
 {
+    public string attackName;
     public float attackRange;
     public float attackMoveSpeed;
     public float attackIndex;
-    [Range(0, 1)] public float animationSpeed;
+    [Range(1, 2)] public float animationSpeed;
+    public AttackType_Melee attackType;
 }
+
+public enum AttackType_Melee { Close, Charge }
 
 public class Enemy_Melee : Enemy
 {
+    [Header("Attack data")]
+    public AttackData attackData;
+    public List<AttackData> attackList = new();
+
     public IdleState_Melee idleState { get; private set; }
     public MoveState_Melee moveState { get; private set; }
     public RecoveryState_Melee recoveryState { get; private set; }
     public ChaseState_Melee chaseState { get; private set; }
     public AttackState_Melee attackState { get; private set; }
-
-    [Header("Attack data")]
-    public AttackData attackData;
+    public DeadState_Melee deadState { get; private set; }
 
     protected override void Awake()
     {
@@ -30,6 +37,7 @@ public class Enemy_Melee : Enemy
         recoveryState = new RecoveryState_Melee(this, stateMachine, "Recovery");
         chaseState = new ChaseState_Melee(this, stateMachine, "Chase");
         attackState = new AttackState_Melee(this, stateMachine, "Attack");
+        deadState = new DeadState_Melee(this, stateMachine, "Idle"); // Use Ragdoll
     }
 
     protected override void Start()
@@ -44,6 +52,12 @@ public class Enemy_Melee : Enemy
         base.Update();
 
         stateMachine.currentState.Update();
+    }
+
+    public override void GetHit()
+    {
+        if (healthPoints <= 0)
+            stateMachine.ChangeState(deadState);
     }
 
     protected override void OnDrawGizmos()

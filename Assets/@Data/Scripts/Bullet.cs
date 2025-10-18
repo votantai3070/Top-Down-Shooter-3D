@@ -1,8 +1,9 @@
-using System.Collections;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public float impactForce;
+
     private BoxCollider cd;
     private Rigidbody rb;
     private MeshRenderer meshRenderer;
@@ -31,7 +32,7 @@ public class Bullet : MonoBehaviour
         DisabledBulletIfNeeded();
         ReturnToPoolIfNeeded();
     }
-    public void BulletSetup(float _flyDistance)
+    public void BulletSetup(float _flyDistance, float impactForce)
     {
         bulletDisabled = false;
         cd.enabled = true;
@@ -40,6 +41,7 @@ public class Bullet : MonoBehaviour
         trailRenderer.time = .25f;
         startPosition = transform.position;
         this.flyDistance = _flyDistance + .5f; // magic number .5f is a length of tip the laser ( Check method UpdateAimVisuals on PlayerAim script)
+        this.impactForce = impactForce;
     }
 
     private void ReturnToPoolIfNeeded()
@@ -71,6 +73,19 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
+
+        if (enemy != null)
+        {
+            Vector3 force = rb.linearVelocity.normalized * impactForce;
+            Rigidbody hitRigidbody = collision.collider.attachedRigidbody;
+
+            enemy.GetHit();
+
+            if (hitRigidbody != null)
+                enemy.HitImpact(force, collision.contacts[0].point, hitRigidbody);
+        }
+
         CreateInpactFx(collision);
 
         ReturnBulletPool();

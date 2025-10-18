@@ -17,6 +17,7 @@ public class PlayerWeaponControllers : MonoBehaviour
     [Header("Bullet details")]
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float bulletSpeed;
+    [SerializeField] float bulletImpactForce;
 
     [SerializeField] Transform weaponHolder;
 
@@ -160,7 +161,7 @@ public class PlayerWeaponControllers : MonoBehaviour
 
         Bullet bulletScript = newBullet.GetComponent<Bullet>();
 
-        bulletScript.BulletSetup(player.weaponControllers.CurrentWeapon().gunDistance);
+        bulletScript.BulletSetup(CurrentWeapon().gunDistance, bulletImpactForce);
 
         Vector3 bulletDirection = currentWeapon.ApplySpread(BulletDirection());
 
