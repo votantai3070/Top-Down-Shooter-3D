@@ -4,10 +4,10 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    protected int healthPoints = 24;
+    [SerializeField] protected int healthPoints = 24;
 
     [SerializeField] private Transform hiddenWeapon;
-    [SerializeField] private Transform pullWeapon;
+    [SerializeField] protected Transform pullWeapon;
 
     [Header("Idle data")]
     public float idleTime;
@@ -76,6 +76,11 @@ public class Enemy : MonoBehaviour
 
     public void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
 
+    public virtual void AbilityTrigger()
+    {
+        stateMachine.currentState.AbilityTrigger();
+    }
+
     public bool PlayerInAggresionRange() => Vector3.Distance(transform.position, player.position) < aggressiveRange;
 
     public Vector3 GetPatrolDestination()
@@ -109,6 +114,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void PullWeapon()
+    {
+        hiddenWeapon.gameObject.SetActive(false);
+        pullWeapon.gameObject.SetActive(true);
+    }
+
+    public void HiddenWeapon()
+    {
+        hiddenWeapon.gameObject.SetActive(true);
+        pullWeapon.gameObject.SetActive(false);
+    }
+
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, aggressiveRange);
@@ -116,15 +133,4 @@ public class Enemy : MonoBehaviour
 
 
     }
-    public void PullWeapon()
-    {
-        hiddenWeapon.gameObject.SetActive(false);
-        pullWeapon.gameObject.SetActive(true);
-    }
-    public void HiddenWeapon()
-    {
-        hiddenWeapon.gameObject.SetActive(true);
-        pullWeapon.gameObject.SetActive(false);
-    }
-
 }

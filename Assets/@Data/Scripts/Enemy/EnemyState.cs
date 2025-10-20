@@ -35,5 +35,10 @@ public class EnemyState : MonoBehaviour
 
     }
 
+    public virtual void AbilityTrigger()
+    {
+
+    }
+
     public void AnimationTrigger() => triggerCalled = true;
 }

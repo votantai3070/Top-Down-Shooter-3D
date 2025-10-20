@@ -70,6 +70,7 @@
     <Compile Include="Assets\@Data\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\@Data\Scripts\Pickups\Interactable.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Ragdoll.cs" />
+    <Compile Include="Assets\@Data\Scripts\EnemyAxe.cs" />
     <Compile Include="Assets\@Data\Scripts\Pickups\Pickup_Ammo.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\MoveState_Melee.cs" />
     <Compile Include="Assets\@Data\Scripts\Weapon\BackupWeaponModel.cs" />
@@ -82,7 +83,9 @@
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\AttackState_Melee.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\EnemyShield.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerAnimationEvents.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\AbilityState_Melee.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponControllers.cs" />
     <Compile Include="Assets\@Data\Scripts\Weapon\WeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\DeadState_Melee.cs" />

@@ -46,6 +46,24 @@ public class PlayerWeaponControllers : MonoBehaviour
 
     #region Slot Management - Pickup/Equip/Drop/Ready Weapon
 
+    private void TriggerEnemyDogde()
+    {
+        Vector3 rayOrigin = GunPoint().position;
+        Vector3 rayDirection = BulletDirection();
+
+        if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, Mathf.Infinity))
+        {
+            Enemy_Melee enemy = hit.collider.GetComponentInParent<Enemy_Melee>();
+
+            Debug.Log("enemy: " + enemy);
+
+            if (enemy != null)
+            {
+                enemy.ActivateDodgeRoll();
+            }
+        }
+    }
+
     private void EquipStartingWeapon()
     {
         if (weaponSlots.Count == 0)
@@ -145,6 +163,7 @@ public class PlayerWeaponControllers : MonoBehaviour
         }
 
         FireSingleBullet();
+        TriggerEnemyDogde();
     }
 
     private void FireSingleBullet()
