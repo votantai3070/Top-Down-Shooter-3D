@@ -11,7 +11,8 @@ public class IdleState_Melee : EnemyState
     {
         base.Enter();
 
-        enemy.HiddenWeapon();
+        //enemy.HiddenWeapon();
+        enemy.EnableWeapon(false);
 
         stateTimer = enemyBase.idleTime;
     }
@@ -19,13 +20,6 @@ public class IdleState_Melee : EnemyState
     public override void Update()
     {
         base.Update();
-
-        if (enemy.PlayerInAggresionRange())
-        {
-            stateMachine.ChangeState(enemy.recoveryState);
-            return;
-        }
-
 
         if (stateTimer < 0)
         {

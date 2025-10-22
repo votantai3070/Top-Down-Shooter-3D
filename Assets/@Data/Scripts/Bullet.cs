@@ -74,9 +74,7 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
-        EnemyShield enemyShield = collision.gameObject.GetComponent<EnemyShield>();
-
-        Debug.Log("enemyShield: " + enemyShield);
+        Enemy_Shield enemyShield = collision.gameObject.GetComponent<Enemy_Shield>();
 
         CreateInpactFx(collision);
         ReturnBulletPool();
@@ -95,7 +93,7 @@ public class Bullet : MonoBehaviour
             enemy.GetHit();
 
             if (hitRigidbody != null)
-                enemy.HitImpact(force, collision.contacts[0].point, hitRigidbody);
+                enemy.DeathImpact(force, collision.contacts[0].point, hitRigidbody);
         }
 
 

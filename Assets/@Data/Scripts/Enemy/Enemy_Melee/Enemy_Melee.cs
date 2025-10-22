@@ -19,6 +19,7 @@ public enum EnemyMelee_Type { Regular, Shield, Dodge, AxeThrow }
 
 public class Enemy_Melee : Enemy
 {
+    #region States
     public IdleState_Melee idleState { get; private set; }
     public MoveState_Melee moveState { get; private set; }
     public RecoveryState_Melee recoveryState { get; private set; }
@@ -26,6 +27,7 @@ public class Enemy_Melee : Enemy
     public AttackState_Melee attackState { get; private set; }
     public DeadState_Melee deadState { get; private set; }
     public AbilityState_Melee abilityState { get; private set; }
+    #endregion
 
     [Header("Attack data")]
     public AttackData attackData;
@@ -39,17 +41,17 @@ public class Enemy_Melee : Enemy
     public Transform axeThrowStartPoint;
     private float lastAxeThrowTime;
 
-    [Header("Shield data")]
+    [Header("Enemy settings")]
     public EnemyMelee_Type meleeType;
     public Transform shieldTransform;
-
     [SerializeField] float dodgeRollCooldown = 5f;
-    private float lastDodgeRollTime;
+    private float lastDodgeRollTime = -10;
 
 
     protected override void Awake()
     {
         base.Awake();
+
 
         idleState = new IdleState_Melee(this, stateMachine, "Idle");
         moveState = new MoveState_Melee(this, stateMachine, "Move");
@@ -65,11 +67,16 @@ public class Enemy_Melee : Enemy
     {
         base.Start();
 
+        InitialSpecialized();
+
+        visuals.SetupRandomLook();
+
         lastDodgeRollTime = Time.time;
 
         stateMachine.Initialize(idleState);
 
-        InitialSpecialized();
+
+        visuals.SetupWeaponLook();
     }
 
     protected override void Update()
@@ -77,6 +84,18 @@ public class Enemy_Melee : Enemy
         base.Update();
 
         stateMachine.currentState.Update();
+
+        if (ShouldEnterBattleMode())
+        {
+            EnterBattleMode();
+        }
+    }
+
+    public override void EnterBattleMode()
+    {
+        base.EnterBattleMode();
+
+        stateMachine.ChangeState(recoveryState);
     }
 
     public override void AbilityTrigger()
@@ -84,7 +103,8 @@ public class Enemy_Melee : Enemy
         base.AbilityTrigger();
 
         //moveSpeed = moveSpeed * .6f;
-        HiddenWeapon();
+        //HiddenWeapon();
+        EnableWeapon(false);
     }
 
     public void ActivateDodgeRoll()
@@ -98,9 +118,7 @@ public class Enemy_Melee : Enemy
         if (Vector3.Distance(transform.position, player.position) < attackData.attackRange)
             return;
 
-        float dodgeAnimationDuration = GetAnimationClipDuration("Stand To Scroll");
-
-        Debug.LogWarning("Dodge Roll Activated! Duration: " + dodgeAnimationDuration);
+        float dodgeAnimationDuration = GetAnimationClipDuration("Stand To Roll");
 
         if (Time.time > lastDodgeRollTime + dodgeAnimationDuration + dodgeRollCooldown)
         {
@@ -111,11 +129,21 @@ public class Enemy_Melee : Enemy
 
     private void InitialSpecialized()
     {
+        if (meleeType == EnemyMelee_Type.AxeThrow)
+        {
+            visuals.SetupWeaponType(EnemyWeaponModelType.Throw);
+        }
+        else
+
         if (meleeType == EnemyMelee_Type.Shield)
         {
             anim.SetFloat("ChaseIndex", 1);
             shieldTransform.gameObject.SetActive(true);
+            visuals.SetupWeaponType(EnemyWeaponModelType.OneHand);
         }
+
+        if (meleeType == EnemyMelee_Type.Dodge)
+            visuals.SetupWeaponType(EnemyWeaponModelType.Unarmed);
     }
 
     public override void GetHit()

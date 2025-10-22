@@ -4,6 +4,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+
     [SerializeField] protected int healthPoints = 24;
 
     [SerializeField] private Transform hiddenWeapon;
@@ -21,8 +22,12 @@ public class Enemy : MonoBehaviour
     private bool manualRotation;
 
     [SerializeField] private Transform[] patrolPoints;
+    private Vector3[] patrolPointsPosition;
     private int currentPatrolIndex;
 
+    public bool inBattleMode { get; private set; }
+
+    public Enemy_Visuals visuals { get; private set; }
     public Transform player { get; private set; }
     public Animator anim { get; private set; }
     public NavMeshAgent agent { get; private set; }
@@ -35,6 +40,7 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         player = GameObject.Find("Player").GetComponent<Transform>();
+        visuals = GetComponent<Enemy_Visuals>();
     }
 
 
@@ -49,12 +55,30 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public virtual void HitImpact(Vector3 force, Vector3 hitPoint, Rigidbody rb)
+    protected bool ShouldEnterBattleMode()
     {
-        StartCoroutine(HitImpactCoroutine(force, hitPoint, rb));
+        bool isAggresionRange = Vector3.Distance(transform.position, player.position) < aggressiveRange;
+
+        if (isAggresionRange && !inBattleMode)
+        {
+            EnterBattleMode();
+            return true;
+        }
+
+        return false;
     }
 
-    IEnumerator HitImpactCoroutine(Vector3 force, Vector3 hitPoint, Rigidbody rb)
+    public virtual void EnterBattleMode()
+    {
+        inBattleMode = true;
+    }
+
+    public virtual void DeathImpact(Vector3 force, Vector3 hitPoint, Rigidbody rb)
+    {
+        StartCoroutine(DeadImpactCoroutine(force, hitPoint, rb));
+    }
+
+    IEnumerator DeadImpactCoroutine(Vector3 force, Vector3 hitPoint, Rigidbody rb)
     {
         yield return new WaitForSeconds(.1f);
 
@@ -63,8 +87,35 @@ public class Enemy : MonoBehaviour
 
     public virtual void GetHit()
     {
+        if (!inBattleMode)
+            EnterBattleMode();
         healthPoints--;
     }
+
+    public void RotateFace(Vector3 target)
+    {
+        Vector3 moveDir = (target - transform.position).normalized;
+        if (moveDir != Vector3.zero)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(moveDir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
+        }
+    }
+
+    public void EnableWeapon(bool active)
+    {
+        if (!visuals.CurrentWeaponModel()) return;
+        //hiddenWeapon.gameObject.SetActive(false);
+        visuals?.CurrentWeaponModel()?.SetActive(active);
+    }
+
+    public void HiddenWeapon()
+    {
+        hiddenWeapon.gameObject.SetActive(true);
+        pullWeapon.gameObject.SetActive(false);
+    }
+
+    #region Animation events
 
     public void ActivateManualMovement(bool manualMovement) => this.manualMovement = manualMovement;
 
@@ -81,11 +132,12 @@ public class Enemy : MonoBehaviour
         stateMachine.currentState.AbilityTrigger();
     }
 
-    public bool PlayerInAggresionRange() => Vector3.Distance(transform.position, player.position) < aggressiveRange;
+    #endregion
 
+    #region Patrol logics
     public Vector3 GetPatrolDestination()
     {
-        Vector3 destination = patrolPoints[currentPatrolIndex].transform.position;
+        Vector3 destination = patrolPointsPosition[currentPatrolIndex];
 
         currentPatrolIndex++;
 
@@ -97,34 +149,17 @@ public class Enemy : MonoBehaviour
 
     private void InitializePatrolPoints()
     {
-        foreach (var t in patrolPoints)
-        {
-            t.parent = null;
+        patrolPointsPosition = new Vector3[patrolPoints.Length];
 
+        for (int i = 0; i < patrolPoints.Length; i++)
+        {
+            patrolPointsPosition[i] = patrolPoints[i].position;
+            patrolPoints[i].gameObject.SetActive(false);
         }
     }
 
-    public void RotateFace(Vector3 target)
-    {
-        Vector3 moveDir = (target - transform.position).normalized;
-        if (moveDir != Vector3.zero)
-        {
-            Quaternion targetRot = Quaternion.LookRotation(moveDir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
-        }
-    }
+    #endregion
 
-    public void PullWeapon()
-    {
-        hiddenWeapon.gameObject.SetActive(false);
-        pullWeapon.gameObject.SetActive(true);
-    }
-
-    public void HiddenWeapon()
-    {
-        hiddenWeapon.gameObject.SetActive(true);
-        pullWeapon.gameObject.SetActive(false);
-    }
 
     protected virtual void OnDrawGizmos()
     {

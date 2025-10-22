@@ -55,7 +55,6 @@ public class PlayerWeaponControllers : MonoBehaviour
         {
             Enemy_Melee enemy = hit.collider.GetComponentInParent<Enemy_Melee>();
 
-            Debug.Log("enemy: " + enemy);
 
             if (enemy != null)
             {
