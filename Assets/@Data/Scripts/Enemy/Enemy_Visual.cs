@@ -27,6 +27,12 @@ public class Enemy_Visuals : MonoBehaviour
         SetupRandomCorruption();
     }
 
+    public void EnableWeaponTrail(bool active)
+    {
+        Enemy_WeaponModel currentWeaponScript = currentWeaponModel.GetComponent<Enemy_WeaponModel>();
+
+        currentWeaponScript.EnableTrailEffects(active);
+    }
 
     public void SetupWeaponType(EnemyWeaponModelType type) => weaponType = type;
 
@@ -50,7 +56,11 @@ public class Enemy_Visuals : MonoBehaviour
             }
         }
 
+        //Debug.Log("filteredModels Count: " + filteredModels.Count);
+
         int randomIndex = Random.Range(0, filteredModels.Count);
+
+        Debug.Log("FilteredModels Name: " + filteredModels[randomIndex].name);
 
         currentWeaponModel = filteredModels[randomIndex].gameObject;
         //currentWeaponModel.SetActive(true);

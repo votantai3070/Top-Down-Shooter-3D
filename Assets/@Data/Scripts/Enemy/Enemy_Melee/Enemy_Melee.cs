@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct AttackData
+public struct AttackData_EnemyMelee
 {
     public string attackName;
     public float attackRange;
@@ -30,8 +30,8 @@ public class Enemy_Melee : Enemy
     #endregion
 
     [Header("Attack data")]
-    public AttackData attackData;
-    public List<AttackData> attackList = new();
+    public AttackData_EnemyMelee attackData;
+    public List<AttackData_EnemyMelee> attackList = new();
 
     [Header("Axe throwing ability")]
     public GameObject axePrefab;
@@ -67,7 +67,9 @@ public class Enemy_Melee : Enemy
     {
         base.Start();
 
-        InitialSpecialized();
+        InitialPerk();
+
+        //attackData = visuals.CurrentWeaponModel().GetComponent<Enemy_WeaponModel>().weaponData.attackData;
 
         visuals.SetupRandomLook();
 
@@ -75,8 +77,8 @@ public class Enemy_Melee : Enemy
 
         stateMachine.Initialize(idleState);
 
-
         visuals.SetupWeaponLook();
+        UpdateAttackData();
     }
 
     protected override void Update()
@@ -84,15 +86,13 @@ public class Enemy_Melee : Enemy
         base.Update();
 
         stateMachine.currentState.Update();
-
-        if (ShouldEnterBattleMode())
-        {
-            EnterBattleMode();
-        }
     }
 
     public override void EnterBattleMode()
     {
+        if (inBattleMode)
+            return;
+
         base.EnterBattleMode();
 
         stateMachine.ChangeState(recoveryState);
@@ -102,9 +102,18 @@ public class Enemy_Melee : Enemy
     {
         base.AbilityTrigger();
 
-        //moveSpeed = moveSpeed * .6f;
-        //HiddenWeapon();
         EnableWeapon(false);
+    }
+
+    public void UpdateAttackData()
+    {
+        Enemy_WeaponModel currentWeaponModel = visuals.CurrentWeaponModel().GetComponent<Enemy_WeaponModel>();
+
+        if (currentWeaponModel != null)
+        {
+            attackList = new(currentWeaponModel.weaponData.attackData);
+            turnSpeed = currentWeaponModel.weaponData.turnSpeed;
+        }
     }
 
     public void ActivateDodgeRoll()
@@ -127,7 +136,7 @@ public class Enemy_Melee : Enemy
         }
     }
 
-    private void InitialSpecialized()
+    private void InitialPerk()
     {
         if (meleeType == EnemyMelee_Type.AxeThrow)
         {

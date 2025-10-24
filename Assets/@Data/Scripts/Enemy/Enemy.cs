@@ -26,7 +26,6 @@ public class Enemy : MonoBehaviour
     private int currentPatrolIndex;
 
     public bool inBattleMode { get; private set; }
-
     public Enemy_Visuals visuals { get; private set; }
     public Transform player { get; private set; }
     public Animator anim { get; private set; }
@@ -52,7 +51,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-
+        if (ShouldEnterBattleMode())
+            EnterBattleMode();
     }
 
     protected bool ShouldEnterBattleMode()

@@ -18,17 +18,19 @@ public class AttackState_Melee : EnemyState
     public override void Enter()
     {
         base.Enter();
+        enemy.UpdateAttackData();
+        enemy.visuals.EnableWeaponTrail(true);
 
         attackMoveSpeed = enemy.attackData.attackMoveSpeed;
-        enemy.anim.SetFloat("AttackAnimationSpeed", enemy.attackData.animationSpeed);
-
-
-        //enemy.PullWeapon();
 
         enemy.agent.isStopped = true;
         enemy.agent.velocity = Vector3.zero;
 
+        Debug.Log("Enemy Attack Index: " + enemy.attackData.attackIndex);
+        Debug.Log("Enemy Animation Attack Speed: " + enemy.attackData.animationSpeed);
+
         enemy.anim.SetFloat("AttackIndex", enemy.attackData.attackIndex);
+        enemy.anim.SetFloat("AttackAnimationSpeed", enemy.attackData.animationSpeed);
         enemy.anim.SetFloat("SlashAttackIndex", Random.Range(0, 5));
 
         attackDirection = enemy.transform.position + (enemy.transform.forward * MAX_ATTACK_DISTANCE);
@@ -37,6 +39,9 @@ public class AttackState_Melee : EnemyState
     public override void Exit()
     {
         base.Exit();
+
+        enemy.visuals.EnableWeaponTrail(false);
+
         SetupNextAttack();
     }
 
@@ -75,9 +80,9 @@ public class AttackState_Melee : EnemyState
 
     private bool PlayerClose() => Vector3.Distance(enemy.transform.position, enemy.player.position) <= 1;
 
-    private AttackData UpdateAttackData()
+    private AttackData_EnemyMelee UpdateAttackData()
     {
-        List<AttackData> validData = new(enemy.attackList);
+        List<AttackData_EnemyMelee> validData = new(enemy.attackList);
         if (PlayerClose())
             validData.RemoveAll(p => p.attackType == AttackType_Melee.Charge);
 
