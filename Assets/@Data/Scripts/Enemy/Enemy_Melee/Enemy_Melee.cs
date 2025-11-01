@@ -43,6 +43,7 @@ public class Enemy_Melee : Enemy
 
     [Header("Enemy settings")]
     public EnemyMelee_Type meleeType;
+    public Enemy_MeleeWeaponType weaponType;
     public Transform shieldTransform;
     [SerializeField] float dodgeRollCooldown = 5f;
     private float lastDodgeRollTime = -10;
@@ -71,13 +72,12 @@ public class Enemy_Melee : Enemy
 
         //attackData = visuals.CurrentWeaponModel().GetComponent<Enemy_WeaponModel>().weaponData.attackData;
 
-        visuals.SetupRandomLook();
+        visuals.SetupLook();
 
         lastDodgeRollTime = Time.time;
 
         stateMachine.Initialize(idleState);
 
-        visuals.SetupWeaponLook();
         UpdateAttackData();
     }
 
@@ -107,7 +107,7 @@ public class Enemy_Melee : Enemy
 
     public void UpdateAttackData()
     {
-        Enemy_WeaponModel currentWeaponModel = visuals.CurrentWeaponModel().GetComponent<Enemy_WeaponModel>();
+        Enemy_MeleeWeaponModel currentWeaponModel = visuals.CurrentWeaponModel().GetComponent<Enemy_MeleeWeaponModel>();
 
         if (currentWeaponModel != null)
         {
@@ -140,7 +140,7 @@ public class Enemy_Melee : Enemy
     {
         if (meleeType == EnemyMelee_Type.AxeThrow)
         {
-            visuals.SetupWeaponType(EnemyWeaponModelType.Throw);
+            weaponType = Enemy_MeleeWeaponType.Throw;
         }
         else
 
@@ -148,11 +148,11 @@ public class Enemy_Melee : Enemy
         {
             anim.SetFloat("ChaseIndex", 1);
             shieldTransform.gameObject.SetActive(true);
-            visuals.SetupWeaponType(EnemyWeaponModelType.OneHand);
+            weaponType = Enemy_MeleeWeaponType.OneHand;
         }
 
         if (meleeType == EnemyMelee_Type.Dodge)
-            visuals.SetupWeaponType(EnemyWeaponModelType.Unarmed);
+            weaponType = Enemy_MeleeWeaponType.Unarmed;
     }
 
     public override void GetHit()

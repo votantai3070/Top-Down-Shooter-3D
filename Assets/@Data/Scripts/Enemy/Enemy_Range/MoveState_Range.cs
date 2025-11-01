@@ -5,7 +5,7 @@ public class MoveState_Range : EnemyState
     private Enemy_Range enemy;
     private Vector3 destination;
 
-    public MoveState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
+    public MoveState_Range(Enemy enemyBase, StateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = enemyBase as Enemy_Range;
     }

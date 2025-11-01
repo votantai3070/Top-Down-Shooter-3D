@@ -61,7 +61,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.58f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\@Data\Scripts\Enemy\EnemyStateMachine.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_RangeWeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\IdleState_Melee.cs" />
     <Compile Include="Assets\@Data\Scripts\Object Pool\ObjectPool.cs" />
     <Compile Include="Assets\@Data\Scripts\Pickups\Pickup_Weapon.cs" />
@@ -78,9 +78,9 @@
     <Compile Include="Assets\@Data\Scripts\Weapon\BackupWeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Target.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_PatrolPoint.cs" />
-    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Visual.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Bullet.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerAim.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Visuals.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Range\MoveState_Range.cs" />
     <Compile Include="Assets\@Data\Scripts\Object Pool\PooledObject.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Range\Enemy_Range.cs" />
@@ -95,8 +95,8 @@
     <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponControllers.cs" />
     <Compile Include="Assets\@Data\Scripts\Weapon\WeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\DeadState_Melee.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\StateMachine.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_AnimationEvents.cs" />
-    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_WeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponVisuals.cs" />
     <Compile Include="Assets\@Data\Scripts\Weapon\Weapon.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\EnemyState.cs" />
@@ -104,6 +104,7 @@
     <Compile Include="Assets\@Data\InputManagers\PlayerControls.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\Enemy_Axe.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\RecoveryState_Melee.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_MeleeWeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\CameraManager.cs" />
     <Compile Include="Assets\@Data\Scripts\Bullet.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\Player.cs" />

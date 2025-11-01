@@ -30,11 +30,11 @@ public class Enemy : MonoBehaviour
     public Transform player { get; private set; }
     public Animator anim { get; private set; }
     public NavMeshAgent agent { get; private set; }
-    public EnemyStateMachine stateMachine { get; private set; }
+    public StateMachine stateMachine { get; private set; }
 
     protected virtual void Awake()
     {
-        stateMachine = new EnemyStateMachine();
+        stateMachine = new StateMachine();
 
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();

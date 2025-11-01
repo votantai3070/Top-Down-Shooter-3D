@@ -5,7 +5,7 @@ public class ChaseState_Melee : EnemyState
     public Enemy_Melee enemy;
     public float lastTimeUpdateDistanation;
 
-    public ChaseState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
+    public ChaseState_Melee(Enemy enemyBase, StateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = enemyBase as Enemy_Melee;
     }

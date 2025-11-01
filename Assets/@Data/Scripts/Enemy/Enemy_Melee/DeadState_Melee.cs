@@ -7,7 +7,7 @@ public class DeadState_Melee : EnemyState
 
     private bool interactionDisabled;
 
-    public DeadState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
+    public DeadState_Melee(Enemy enemyBase, StateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = enemyBase as Enemy_Melee;
         ragdoll = enemy.GetComponent<Enemy_Ragdoll>();

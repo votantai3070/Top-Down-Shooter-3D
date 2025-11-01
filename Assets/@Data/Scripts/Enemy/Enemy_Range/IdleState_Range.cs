@@ -4,7 +4,7 @@ public class IdleState_Range : EnemyState
 {
     private Enemy_Range enemy;
 
-    public IdleState_Range(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
+    public IdleState_Range(Enemy enemyBase, StateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = enemyBase as Enemy_Range;
     }
@@ -14,6 +14,8 @@ public class IdleState_Range : EnemyState
         base.Enter();
 
         stateTimer = enemy.idleTime;
+
+        enemy.visuals.EnableIK(false);
     }
 
     public override void Exit()

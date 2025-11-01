@@ -8,7 +8,7 @@ public class AbilityState_Melee : EnemyState
     private const float MAX_MOVEMENT_DISTANCE = 20;
     private float moveSpeed;
 
-    public AbilityState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
+    public AbilityState_Melee(Enemy enemyBase, StateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = enemyBase as Enemy_Melee;
     }

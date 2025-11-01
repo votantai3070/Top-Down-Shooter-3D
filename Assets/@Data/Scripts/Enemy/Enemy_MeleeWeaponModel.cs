@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Enemy_WeaponModel : MonoBehaviour
+public class Enemy_MeleeWeaponModel : MonoBehaviour
 {
-    public EnemyWeaponModelType weaponModelType;
+    public Enemy_MeleeWeaponType weaponModelType;
     public AnimatorOverrideController animatorOverrideController;
     public Enemy_MeleeWeaponData weaponData;
 

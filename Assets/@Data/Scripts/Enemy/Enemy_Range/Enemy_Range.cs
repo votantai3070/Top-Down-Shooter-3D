@@ -3,11 +3,14 @@ using UnityEngine;
 public class Enemy_Range : Enemy
 {
     public Transform weaponHolder;
+    public Enemy_RangeWeaponType weaponType;
 
     public float fireRate = 1; //Bullets per second
     public GameObject bulletPrefab;
     public Transform gunPoint;
     public float bulletSpeed = 20f;
+    public int bulletsToShoot = 5; // Bullets to shoot before weapon goes on cooldown
+    public float weaponCooldown = 1.5f; // Weapon cooldown after all bullets shot
 
     public IdleState_Range idleState { get; private set; }
     public MoveState_Range moveState { get; private set; }
@@ -26,7 +29,10 @@ public class Enemy_Range : Enemy
     {
         base.Start();
 
+
         stateMachine.Initialize(idleState);
+
+        visuals.SetupLook();
     }
 
     protected override void Update()

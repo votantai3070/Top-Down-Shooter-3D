@@ -10,7 +10,7 @@ public class AttackState_Melee : EnemyState
 
     private const float MAX_ATTACK_DISTANCE = 50f;
 
-    public AttackState_Melee(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
+    public AttackState_Melee(Enemy enemyBase, StateMachine stateMachine, string animBoolName) : base(enemyBase, stateMachine, animBoolName)
     {
         enemy = enemyBase as Enemy_Melee;
     }

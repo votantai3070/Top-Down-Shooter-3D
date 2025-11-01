@@ -3,14 +3,14 @@ using UnityEngine;
 public class EnemyState
 {
     protected Enemy enemyBase;
-    protected EnemyStateMachine stateMachine;
+    protected StateMachine stateMachine;
 
     protected string animBoolName;
     protected float stateTimer;
 
     protected bool triggerCalled;
 
-    public EnemyState(Enemy enemyBase, EnemyStateMachine stateMachine, string animBoolName)
+    public EnemyState(Enemy enemyBase, StateMachine stateMachine, string animBoolName)
     {
         this.enemyBase = enemyBase;
         this.stateMachine = stateMachine;

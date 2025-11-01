@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class EnemyStateMachine
+public class StateMachine
 {
     public EnemyState currentState { get; private set; }
 
