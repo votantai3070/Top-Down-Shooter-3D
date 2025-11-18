@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New enemy melee weapon", menuName = "Enemy data/Melee weapon data")]
+[CreateAssetMenu(fileName = "New Weapon Data", menuName = "Enemy data/Melee weapon data")]
 public class Enemy_MeleeWeaponData : ScriptableObject
 {
     public List<AttackData_EnemyMelee> attackData;

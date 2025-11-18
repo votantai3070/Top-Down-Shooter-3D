@@ -61,11 +61,15 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.58f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\@Data\Scripts\Enemy\CoverSystem\Cover.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_RangeWeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\IdleState_Melee.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\Data\Enemy_RangeWeaponData.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Range\AdvancePlayer_Range.cs" />
     <Compile Include="Assets\@Data\Scripts\Object Pool\ObjectPool.cs" />
     <Compile Include="Assets\@Data\Scripts\Pickups\Pickup_Weapon.cs" />
     <Compile Include="Assets\@Data\Scripts\Weapon\Weapon_Data.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Range\RunToCoverState_Range.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\@Data\Scripts\Pickups\Interactable.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Ragdoll.cs" />
@@ -105,6 +109,7 @@
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\Enemy_Axe.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\RecoveryState_Melee.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_MeleeWeaponModel.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\CoverSystem\CoverPoint.cs" />
     <Compile Include="Assets\@Data\Scripts\CameraManager.cs" />
     <Compile Include="Assets\@Data\Scripts\Bullet.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\Player.cs" />
