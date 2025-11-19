@@ -68,7 +68,7 @@ public class Enemy_Melee : Enemy
     {
         base.Start();
 
-        InitialPerk();
+        InitializePerk();
 
         //attackData = visuals.CurrentWeaponModel().GetComponent<Enemy_WeaponModel>().weaponData.attackData;
 
@@ -136,7 +136,7 @@ public class Enemy_Melee : Enemy
         }
     }
 
-    private void InitialPerk()
+    protected override void InitializePerk()
     {
         if (meleeType == EnemyMelee_Type.AxeThrow)
         {

@@ -61,6 +61,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.58f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Range\ThrowGrenadeState_Range.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\CoverSystem\Cover.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_RangeWeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\IdleState_Melee.cs" />

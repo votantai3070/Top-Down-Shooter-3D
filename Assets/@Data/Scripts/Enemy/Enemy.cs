@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        player = GameObject.Find("Player").GetComponent<Transform>();
+        player = FindAnyObjectByType<Player>().transform;
         visuals = GetComponent<Enemy_Visuals>();
     }
 
@@ -53,6 +53,10 @@ public class Enemy : MonoBehaviour
     {
         if (ShouldEnterBattleMode())
             EnterBattleMode();
+    }
+
+    protected virtual void InitializePerk()
+    {
     }
 
     protected bool ShouldEnterBattleMode()

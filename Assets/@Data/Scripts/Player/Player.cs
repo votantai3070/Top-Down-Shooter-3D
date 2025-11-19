@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public PlayerControls controls;
-    public PlayerAim aim { get; private set; } // Read-only property
+    public Transform playerBody;
+    public PlayerControls controls { get; private set; }
+    public PlayerAim aim { get; private set; }
     public PlayerMovement movement { get; private set; }
     public PlayerWeaponControllers weaponControllers { get; private set; }
 
