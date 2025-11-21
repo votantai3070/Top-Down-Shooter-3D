@@ -102,7 +102,7 @@ public class Enemy_Melee : Enemy
     {
         base.AbilityTrigger();
 
-        EnableWeapon(false);
+        visuals.EnableWeapon(false);
     }
 
     public void UpdateAttackData()

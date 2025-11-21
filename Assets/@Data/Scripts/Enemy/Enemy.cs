@@ -104,12 +104,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void EnableWeapon(bool active)
-    {
-        if (!visuals.CurrentWeaponModel()) return;
-        //hiddenWeapon.gameObject.SetActive(false);
-        visuals?.CurrentWeaponModel()?.SetActive(active);
-    }
+
 
     public void HiddenWeapon()
     {

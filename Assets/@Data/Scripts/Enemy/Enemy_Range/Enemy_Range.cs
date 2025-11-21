@@ -12,6 +12,8 @@ public class Enemy_Range : Enemy
     public GrenadePerk grenadePerk;
 
     [Header("Grenade perks")]
+    public GameObject grenadePrefab;
+    public float timeToTarget = 1.2f;
     public float grenadeCooldown;
     private float lastTimeThrewGrenade = -10;
 
@@ -122,7 +124,12 @@ public class Enemy_Range : Enemy
     public void ThrowGrenade()
     {
         lastTimeThrewGrenade = Time.time;
-        Debug.Log("Grenade Thrown!");
+
+        GameObject newGrenade = ObjectPool.instance.GetObject(grenadePrefab);
+        newGrenade.transform.position = weaponHolder.position;
+
+        Enemy_Grenade newGrenadeScript = newGrenade.GetComponent<Enemy_Grenade>();
+        newGrenadeScript?.SetupGrenade(player.position, timeToTarget);
     }
 
     public override void EnterBattleMode()

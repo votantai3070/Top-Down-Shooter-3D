@@ -74,6 +74,7 @@
     <Compile Include="Assets\@Data\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\@Data\Scripts\Pickups\Interactable.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Ragdoll.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_SecondaryWeaponModel.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Data\Enemy_MeleeWeaponData.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Range\IdleState_Range.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\Enemy_Shield.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\AttackState_Melee.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Grenade.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerAnimationEvents.cs" />
     <Compile Include="Assets\@Data\Scripts\Enemy\Enemy_Melee\AbilityState_Melee.cs" />
     <Compile Include="Assets\@Data\Scripts\Player\PlayerWeaponControllers.cs" />
